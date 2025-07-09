@@ -4,7 +4,7 @@
     "description": "Frontend for Smart Budget Buddy application",
     "main": "js/app.js",
     "scripts": {
-        "backend": "python -m uvicorn main:app --reload --host localhost --port 8000",
+        "backend": "pip install -r requirements.txt && python -m uvicorn main:app --reload --host localhost --port 8000",
         "dev": "cd app && python -m http.server 3000",
         "dev:8080": "cd app && python -m http.server 8080",
         "build": "echo 'Building frontend assets...' && mkdir -p dist && cp -r * dist/",
