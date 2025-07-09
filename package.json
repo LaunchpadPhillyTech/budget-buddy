@@ -5,8 +5,7 @@
     "main": "js/app.js",
     "scripts": {
         "backend": "pip install -r requirements.txt && python -m uvicorn main:app --reload --host localhost --port 8000",
-        "dev": "cd app && python -m http.server 3000",
-        "dev:8080": "cd app && python -m http.server 8080",
+        "dev": "python -m http.server 3000",
         "build": "echo 'Building frontend assets...' && mkdir -p dist && cp -r * dist/",
         "test": "echo 'No tests specified yet'"
     },
