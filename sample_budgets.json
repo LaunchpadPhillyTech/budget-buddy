@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "category": "food",
+    "amount": 400.0,
+    "period": "monthly"
+  },
+  {
+    "id": 2,
+    "category": "transport",
+    "amount": 150.0,
+    "period": "monthly"
+  },
+  {
+    "id": 3,
+    "category": "entertainment",
+    "amount": 100.0,
+    "period": "monthly"
+  },
+  {
+    "id": 4,
+    "category": "shopping",
+    "amount": 200.0,
+    "period": "monthly"
+  },
+  {
+    "id": 5,
+    "category": "utilities",
+    "amount": 180.0,
+    "period": "monthly"
+  },
+  {
+    "id": 6,
+    "category": "healthcare",
+    "amount": 250.0,
+    "period": "monthly"
+  },
+  {
+    "id": 7,
+    "category": "other",
+    "amount": 100.0,
+    "period": "monthly"
+  }
+]

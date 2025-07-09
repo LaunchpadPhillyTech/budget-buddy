@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Smart Budget Buddy</title>
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/responsive.css">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <header class="header">
+            <div class="container">
+                <h1 class="logo">
+                    <i class="fas fa-piggy-bank"></i>
+                    Smart Budget Buddy
+                </h1>
+                <nav class="nav">
+                    <button class="nav-btn active" data-section="dashboard">Dashboard</button>
+                    <button class="nav-btn" data-section="expenses">Expenses</button>
+                    <button class="nav-btn" data-section="budgets">Budgets</button>
+                    <button class="nav-btn" data-section="ai-insights">AI Insights</button>
+                </nav>
+            </div>
+        </header>
+
+        <main class="main">
+            <div class="container">
+                <!-- Dashboard Section -->
+                <section id="dashboard" class="section active">
+                    <div class="dashboard-header">
+                        <h2>Dashboard</h2>
+                        <button class="btn btn-secondary" onclick="app.resetTestData()">
+                            🔄 Reset Test Data
+                        </button>
+                    </div>
+                    <div class="dashboard-grid">
+                        <div class="card">
+                            <h3>Total Spent This Month</h3>
+                            <p class="amount" id="total-spent">$0.00</p>
+                        </div>
+                        <div class="card">
+                            <h3>Total Expenses</h3>
+                            <p class="count" id="expense-count">0</p>
+                        </div>
+                        <div class="card">
+                            <h3>Active Budgets</h3>
+                            <p class="count" id="budget-count">0</p>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="spending-chart"></canvas>
+                    </div>
+                </section>
+
+                <!-- Expenses Section -->
+                <section id="expenses" class="section">
+                    <h2>Expenses</h2>
+                    <div class="form-container">
+                        <form id="expense-form" class="form">
+                            <div class="form-group">
+                                <label for="expense-amount">Amount ($)</label>
+                                <input type="number" id="expense-amount" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="expense-category">Category</label>
+                                <select id="expense-category" required>
+                                    <option value="">Select a category</option>
+                                    <option value="food">Food & Dining</option>
+                                    <option value="transport">Transportation</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="utilities">Utilities</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="expense-description">Description</label>
+                                <input type="text" id="expense-description" placeholder="What did you buy?">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Expense</button>
+                        </form>
+                    </div>
+                    <div class="expenses-list">
+                        <h3>Recent Expenses</h3>
+                        <div id="expenses-container">
+                            <!-- Expenses will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Budgets Section -->
+                <section id="budgets" class="section">
+                    <h2>Budgets</h2>
+                    <div class="form-container">
+                        <form id="budget-form" class="form">
+                            <div class="form-group">
+                                <label for="budget-category">Category</label>
+                                <select id="budget-category" required>
+                                    <option value="">Select a category</option>
+                                    <option value="food">Food & Dining</option>
+                                    <option value="transport">Transportation</option>
+                                    <option value="entertainment">Entertainment</option>
+                                    <option value="shopping">Shopping</option>
+                                    <option value="utilities">Utilities</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="budget-amount">Budget Amount ($)</label>
+                                <input type="number" id="budget-amount" step="0.01" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="budget-period">Period</label>
+                                <select id="budget-period" required>
+                                    <option value="monthly">Monthly</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="yearly">Yearly</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Budget</button>
+                        </form>
+                    </div>
+                    <div class="budgets-list">
+                        <h3>Your Budgets</h3>
+                        <div id="budgets-container">
+                            <!-- Budgets will be loaded here -->
+                        </div>
+                    </div>
+                </section>
+
+                <!-- AI Insights Section -->
+                <section id="ai-insights" class="section">
+                    <h2>AI Financial Insights</h2>
+                    <div class="ai-container">
+                        <div class="sample-questions">
+                            <h3>💡 Sample Questions to Try:</h3>
+                            <div class="question-buttons">
+                                <button class="question-btn"
+                                    onclick="app.fillAIQuestion('How can I reduce my spending on food?')">
+                                    How can I reduce my spending on food?
+                                </button>
+                                <button class="question-btn"
+                                    onclick="app.fillAIQuestion('What is my biggest expense category?')">
+                                    What's my biggest expense category?
+                                </button>
+                                <button class="question-btn"
+                                    onclick="app.fillAIQuestion('Give me tips to save money on transportation')">
+                                    Give me tips to save money on transportation
+                                </button>
+                                <button class="question-btn"
+                                    onclick="app.fillAIQuestion('How much should I budget for entertainment?')">
+                                    How much should I budget for entertainment?
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-container">
+                            <form id="ai-form" class="form">
+                                <div class="form-group">
+                                    <label for="ai-question">Ask your AI financial advisor:</label>
+                                    <textarea id="ai-question" rows="3"
+                                        placeholder="How can I reduce my spending? What's my biggest expense category?"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Get AI Insights</button>
+                            </form>
+                        </div>
+                        <div class="ai-response">
+                            <h3>AI Recommendations</h3>
+                            <div id="ai-insights-container">
+                                <p class="placeholder">Ask a question to get personalized financial advice!</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 Smart Budget Buddy. Built with FastAPI, HTML, CSS, JavaScript, and OpenAI ChatGPT.</p>
+            </div>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="js/api.js"></script>
+        <script src="js/charts.js"></script>
+        <script src="js/app.js"></script>
+    </body>
+
+</html>

@@ -1,0 +1,142 @@
+[
+  {
+    "id": 1,
+    "amount": 45.67,
+    "category": "food",
+    "description": "Grocery shopping at Whole Foods",
+    "date": "2025-07-07T14:03:33.823741"
+  },
+  {
+    "id": 2,
+    "amount": 18.5,
+    "category": "food",
+    "description": "Coffee and pastry",
+    "date": "2025-07-06T14:03:33.823751"
+  },
+  {
+    "id": 3,
+    "amount": 32.8,
+    "category": "food",
+    "description": "Lunch at Italian restaurant",
+    "date": "2025-07-05T14:03:33.823753"
+  },
+  {
+    "id": 4,
+    "amount": 12.99,
+    "category": "food",
+    "description": "Fast food dinner",
+    "date": "2025-07-04T14:03:33.823754"
+  },
+  {
+    "id": 5,
+    "amount": 3.5,
+    "category": "transport",
+    "description": "Metro subway ticket",
+    "date": "2025-07-07T14:03:33.823755"
+  },
+  {
+    "id": 6,
+    "amount": 25.0,
+    "category": "transport",
+    "description": "Uber ride to airport",
+    "date": "2025-07-03T14:03:33.823757"
+  },
+  {
+    "id": 7,
+    "amount": 60.0,
+    "category": "transport",
+    "description": "Gas for car",
+    "date": "2025-07-01T14:03:33.823758"
+  },
+  {
+    "id": 8,
+    "amount": 15.0,
+    "category": "entertainment",
+    "description": "Movie ticket",
+    "date": "2025-07-06T14:03:33.823759"
+  },
+  {
+    "id": 9,
+    "amount": 8.99,
+    "category": "entertainment",
+    "description": "Netflix subscription",
+    "date": "2025-06-28T14:03:33.823760"
+  },
+  {
+    "id": 10,
+    "amount": 45.0,
+    "category": "entertainment",
+    "description": "Concert tickets",
+    "date": "2025-06-23T14:03:33.823761"
+  },
+  {
+    "id": 11,
+    "amount": 89.99,
+    "category": "shopping",
+    "description": "New running shoes",
+    "date": "2025-07-05T14:03:33.823762"
+  },
+  {
+    "id": 12,
+    "amount": 24.5,
+    "category": "shopping",
+    "description": "Book purchase",
+    "date": "2025-07-02T14:03:33.823763"
+  },
+  {
+    "id": 13,
+    "amount": 156.78,
+    "category": "shopping",
+    "description": "Clothing shopping",
+    "date": "2025-06-26T14:03:33.823765"
+  },
+  {
+    "id": 14,
+    "amount": 85.0,
+    "category": "utilities",
+    "description": "Electric bill",
+    "date": "2025-07-03T14:03:33.823766"
+  },
+  {
+    "id": 15,
+    "amount": 45.0,
+    "category": "utilities",
+    "description": "Internet bill",
+    "date": "2025-06-30T14:03:33.823768"
+  },
+  {
+    "id": 16,
+    "amount": 32.0,
+    "category": "utilities",
+    "description": "Water bill",
+    "date": "2025-06-28T14:03:33.823769"
+  },
+  {
+    "id": 17,
+    "amount": 25.0,
+    "category": "healthcare",
+    "description": "Pharmacy prescription",
+    "date": "2025-07-04T14:03:33.823770"
+  },
+  {
+    "id": 18,
+    "amount": 150.0,
+    "category": "healthcare",
+    "description": "Doctor visit copay",
+    "date": "2025-06-24T14:03:33.823771"
+  },
+  {
+    "id": 19,
+    "amount": 20.0,
+    "category": "other",
+    "description": "Bank ATM fee",
+    "date": "2025-07-01T14:03:33.823772"
+  },
+  {
+    "id": 20,
+    "amount": 50.0,
+    "category": "other",
+    "description": "Gift for friend",
+    "date": "2025-06-27T14:03:33.823774"
+  }
+]

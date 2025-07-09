@@ -1,0 +1,258 @@
+/* Responsive Design */
+
+/* Tablet Styles */
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .nav {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-btn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+    }
+
+    .form {
+        grid-template-columns: 1fr;
+    }
+
+    .form-container {
+        padding: 1.5rem;
+    }
+
+    .expenses-list,
+    .budgets-list {
+        padding: 1.5rem;
+    }
+
+    .expense-item,
+    .budget-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .chart-container {
+        padding: 1rem;
+    }
+}
+
+/* Mobile Styles */
+@media (max-width: 480px) {
+    .container {
+        padding: 0 15px;
+    }
+
+    .logo {
+        font-size: 1.2rem;
+    }
+
+    .nav {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .nav-btn {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.8rem;
+    }
+
+    .section h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .card .amount,
+    .card .count {
+        font-size: 2rem;
+    }
+
+    .form-container {
+        padding: 1rem;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    .expenses-list,
+    .budgets-list {
+        padding: 1rem;
+    }
+
+    .expense-item,
+    .budget-item {
+        padding: 0.8rem;
+    }
+
+    .ai-container {
+        padding: 0;
+    }
+
+    .ai-response {
+        padding: 1rem;
+    }
+
+    .ai-insight {
+        padding: 1rem;
+    }
+
+    .chart-container {
+        padding: 0.5rem;
+    }
+
+    .footer {
+        padding: 0.5rem 0;
+        font-size: 0.9rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+
+    .header,
+    .nav,
+    .footer {
+        display: none;
+    }
+
+    .section {
+        display: block !important;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .btn {
+        display: none;
+    }
+
+    .form-container {
+        display: none;
+    }
+}
+
+/* High DPI Displays */
+@media (-webkit-min-device-pixel-ratio: 2),
+(min-resolution: 2dppx) {
+    .logo i {
+        font-size: 1.2em;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #e0e0e0;
+    }
+
+    .card,
+    .form-container,
+    .expenses-list,
+    .budgets-list,
+    .ai-response,
+    .chart-container {
+        background-color: #2d2d2d;
+        color: #e0e0e0;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        background-color: #3a3a3a;
+        border-color: #555;
+        color: #e0e0e0;
+    }
+
+    .expense-item:hover,
+    .budget-item:hover {
+        background-color: #3a3a3a;
+    }
+
+    .ai-insight {
+        background-color: #3a3a3a;
+    }
+
+    .progress-bar {
+        background-color: #555;
+    }
+}
+
+/* Landscape Mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+    .header .container {
+        flex-direction: row;
+    }
+
+    .nav {
+        flex-direction: row;
+        width: auto;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Very Small Screens */
+@media (max-width: 320px) {
+    .nav-btn {
+        padding: 0.2rem 0.4rem;
+        font-size: 0.7rem;
+    }
+
+    .card .amount,
+    .card .count {
+        font-size: 1.5rem;
+    }
+
+    .section h2 {
+        font-size: 1.2rem;
+    }
+}
