@@ -5,7 +5,8 @@ from pydantic import BaseModel
 from typing import List, Optional
 import os
 from dotenv import load_dotenv
-import openai
+# Remove or comment out this line if you don't have OpenAI setup
+# import openai
 from datetime import datetime
 from test_data import get_sample_expenses, get_sample_budgets, get_random_ai_insight
 
@@ -22,30 +23,16 @@ app = FastAPI(
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000", 
-        "http://127.0.0.1:3000",
-        "http://localhost:8080",
-        "http://127.0.0.1:8080",
-        "http://0.0.0.0:3000",
-        "http://0.0.0.0:8080"
-    ],
-    allow_credentials=True,
+    allow_origins=["*"],  # Allow all origins for development
+    allow_credentials=False,  # Set to False when using allow_origins=["*"]
     allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allow_headers=["*"],
 )
-
-# Add OPTIONS handler for CORS preflight requests
-@app.options("/{full_path:path}")
-async def options_handler(full_path: str):
-    """Handle OPTIONS requests for CORS preflight"""
-    return {"message": "OK"}
 
 # Security
 security = HTTPBearer()
 
 # Initialize OpenAI client
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 # Pydantic models
 class ExpenseCreate(BaseModel):
@@ -84,10 +71,9 @@ async def get_expenses():
 
 @app.post("/api/expenses")
 async def create_expense(expense: ExpenseCreate):
-    
     """Create a new expense"""
-    expense_dict = expense.dict()
-    expense_dict["id"] .dict= len(expenses_db) + 1
+    expense_dict = expense.model_dump()  # Changed from expense.dict()
+    expense_dict["id"] = len(expenses_db) + 1
     expense_dict["date"] = expense_dict["date"] or datetime.now().isoformat()
     expenses_db.append(expense_dict)
     return {"message": "Expense created", "expense": expense_dict}
@@ -108,7 +94,7 @@ async def get_budgets():
 @app.post("/api/budgets")
 async def create_budget(budget: BudgetCreate):
     """Create a new budget"""
-    budget_dict = budget.dict()
+    budget_dict = budget.model_dump()  # Changed from budget.dict()
     budget_dict["id"] = len(budgets_db) + 1
     budgets_db.append(budget_dict)
     return {"message": "Budget created", "budget": budget_dict}

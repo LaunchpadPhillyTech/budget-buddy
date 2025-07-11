@@ -4,8 +4,9 @@
     "description": "Frontend for Smart Budget Buddy application",
     "main": "js/app.js",
     "scripts": {
-        "backend": "pip install -r requirements.txt && python -m uvicorn main:app --reload --host localhost --port 8000",
-        "dev": "python -m http.server 3000",
+        "setup": "python -m pip install -r requirements.txt",
+        "run-backend-server": "python -m uvicorn main:app --reload --host localhost --port 8000",
+        "run-website": "cd app && python -m http.server 3000 --bind localhost",
         "build": "echo 'Building frontend assets...' && mkdir -p dist && cp -r * dist/",
         "test": "echo 'No tests specified yet'"
     },
@@ -16,8 +17,5 @@
         "chatgpt"
     ],
     "author": "Your Name",
-    "license": "MIT",
-    "devDependencies": {
-        "live-server": "^1.2.2"
-    }
+    "license": "MIT"
 }

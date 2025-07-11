@@ -16,7 +16,7 @@ Smart Budget Buddy is a full-stack web application that combines modern web tech
 
 ### Backend
 - **FastAPI** - Modern, fast web framework for building APIs with Python
-- **Python 3.8+** - Core backend language
+- **Python 3.12+** - Core backend language
 - **OpenAI API** - Integration with ChatGPT for AI-powered insights
 
 ### app
@@ -29,13 +29,16 @@ Smart Budget Buddy is a full-stack web application that combines modern web tech
 
 Before running this project, make sure you have the following installed:
 
-- **Python 3.8+** - [Download Python](https://python.org/downloads/)
+- **Python 3.12+** - [Download Python](https://python.org/downloads/)
+  - ⚠️ **Important**: Python 3.12 or higher is required for Pydantic v2 compatibility
+  - The backend uses `model_dump()` method which requires Pydantic v2
 - **Git** - Version control system
 - **Text Editor** - VS Code, Sublime Text, or any code editor
-- **OpenAI API Key** - [Get your API key](https://platform.openai.com/api-keys)
 
 **Optional**:
-- **Node.js 16+** - Only needed if you want to use development tools (not required for basic tutorial)
+- **OpenAI API Key** - [Get your API key](https://platform.openai.com/api-keys) (not required for demo)
+  - The application works with sample AI responses without an API key
+- **Node.js 22** - Only needed for npm scripts (package.json commands)
 
 ## 🔧 Installation & Setup
 
@@ -48,13 +51,21 @@ cd smart-budget-buddy
 
 ### 2. Backend Setup (FastAPI)
 
+**⚠️ Important Version Requirements:**
+- **Python 3.10+** is required for Pydantic v2 compatibility
+- The backend has been updated to use modern Pydantic syntax (`model_dump()` instead of deprecated `.dict()`)
+
 ```bash
 # Install Python dependencies
-pip install -r requirements.txt
+npm run setup
+# OR manually:
+python -m pip install -r requirements.txt
 
 # Alternative: Install core packages directly
-pip install fastapi uvicorn python-dotenv openai
+pip install fastapi uvicorn python-dotenv pydantic
 ```
+
+**Note**: OpenAI integration is optional - the app works with sample AI responses for demo purposes.
 
 ### 3. app Setup
 
@@ -67,37 +78,101 @@ The app is a simple HTML/CSS/JavaScript application that doesn't require a build
 
 Note: The `package.json` file is included for project metadata and development scripts, but no Node.js dependencies are required for the basic tutorial.
 
-### 4. Environment Configuration
+### 4. Environment Configuration (Optional)
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the root directory if you want to use OpenAI integration:
 
 ```env
-# OpenAI Configuration
+# OpenAI Configuration (Optional - app works without this)
 OPENAI_API_KEY=your_openai_api_key_here
 
-# Database Configuration
-DATABASE_URL=sqlite:///./budget_buddy.db
-
-# FastAPI Configuration
-SECRET_KEY=your_secret_key_here
-DEBUG=True
-
 # CORS Settings
-app_URL=http://localhost:3000
+FRONTEND_URL=http://localhost:3000
 ```
+
+**Note**: The application includes sample AI responses and works perfectly without an OpenAI API key for educational purposes.
 
 ### 4. Database Setup
 
-For this tutorial, the application uses in-memory storage, so no database setup is required. The data will be stored temporarily while the application is running.
+For this tutorial, the application uses in-memory storage with automatic test data loading, so no database setup is required. The data will be stored temporarily while the application is running.
 
 ```bash
 # No database setup needed for the tutorial version
-# Data is stored in memory and will reset when the server restarts
+# Test data automatically loads when the backend starts
+# Data includes 20 sample expenses and 7 sample budgets
 ```
+
+**Key Features:**
+- ✅ **Automatic Test Data Loading**: 20 expenses + 7 budgets load instantly
+- ✅ **Reset Functionality**: Use `/api/reset-data` endpoint to reload fresh data
+- ✅ **No Database Required**: Perfect for classroom environments
 
 **Note**: For production use, you would want to implement a proper database like SQLite or PostgreSQL.
 
-## 🚀 Running the Application
+## � Recent Updates & Fixes
+
+### What Was Fixed
+
+The Smart Budget Buddy application has been updated to resolve several common issues that students encountered:
+
+#### ✅ **CORS Issues Resolved**
+- **Problem**: Frontend couldn't communicate with backend due to CORS policy
+- **Solution**: Simplified CORS configuration to `allow_origins=["*"]` for development
+- **Removed**: Complex OPTIONS handler that was conflicting with FastAPI's built-in CORS
+
+#### ✅ **Pydantic Compatibility Updated** 
+- **Problem**: Code used deprecated `.dict()` method causing errors
+- **Solution**: Updated to modern Pydantic v2 syntax using `model_dump()`
+- **Requirement**: Python 3.10+ now required for compatibility
+
+#### ✅ **OpenAI Dependency Made Optional**
+- **Problem**: Students couldn't run app without OpenAI API key
+- **Solution**: App now works with sample AI responses, no API key required
+- **Benefit**: Perfect for classroom environments with no external dependencies
+
+#### ✅ **Improved npm Scripts**
+- **Problem**: Confusing script names in package.json
+- **Solution**: Clearer command names:
+  - `npm run setup` - Install Python dependencies
+  - `npm run run-backend-server` - Start FastAPI server
+  - `npm run run-website` - Start frontend server
+
+#### ✅ **Removed Node.js Dependencies**
+- **Problem**: Unnecessary Node.js packages causing setup complexity
+- **Solution**: Removed live-server and other Node.js dependencies
+- **Result**: Simplified setup using only Python's built-in HTTP server
+
+### Technical Changes Made
+
+```python
+# OLD (Deprecated - caused errors):
+expense_dict = expense.dict()
+
+# NEW (Modern Pydantic v2):
+expense_dict = expense.model_dump()
+```
+
+```python
+# OLD (Complex CORS - caused issues):
+allow_origins=[
+    "http://localhost:3000", 
+    "http://127.0.0.1:3000",
+    # ... multiple origins
+]
+
+# NEW (Simplified for development):
+allow_origins=["*"]  # Allow all origins for development
+```
+
+### Verification
+
+You can verify these fixes work by:
+1. **No CORS Errors**: Browser console should be clear of CORS-related errors
+2. **Fast Startup**: Backend starts without dependency issues
+3. **Test Data Loads**: 20 expenses + 7 budgets appear immediately
+4. **Cross-Platform**: Works on Windows, Mac, and Linux
+
+## �🚀 Running the Application
 
 ### Quick Start (Recommended)
 
@@ -107,13 +182,15 @@ The application consists of two parts that need to be running simultaneously:
 
 ```bash
 # From root directory 
-npm run backend
+npm run run-backend-server
 ```
 
 This will:
+- Install Python dependencies automatically (if using `npm run setup` first)
 - Start the FastAPI server on `http://localhost:8000`
 - **Automatically load all test data** (20 sample expenses + 7 budgets)
 - Enable API documentation at `http://localhost:8000/docs`
+- Use modern Pydantic v2 syntax for better performance
 
 **🔄 How Test Data Loading Works:**
 When the backend starts, it automatically runs these lines from `main.py`:
@@ -127,17 +204,32 @@ You'll see test data is loaded when you visit the API endpoints:
 - `http://localhost:8000/api/expenses` - Shows 20 sample expenses
 - `http://localhost:8000/api/budgets` - Shows 7 sample budgets
 
+**🛠️ Alternative Manual Command:**
+```bash
+python -m uvicorn main:app --reload --host localhost --port 8000
+```
+
 #### 2. Start Frontend Development Server
 
 ```bash
 # From root directory (in a new terminal)
-npm run dev
+npm run run-website
 ```
 
 This will:
 - Start the frontend server on `http://localhost:3000`
-- Serve the HTML/CSS/JavaScript files
+- Serve the HTML/CSS/JavaScript files from the `app/` directory
 - Connect to the backend API automatically
+- Bind to localhost for security
+
+**🛠️ Alternative Manual Commands:**
+```bash
+# Option 1: Using the app directory
+cd app && python -m http.server 3000 --bind localhost
+
+# Option 2: Alternative port if 3000 is busy
+cd app && python -m http.server 8080 --bind localhost
+```
 
 #### 3. Access the Application
 
@@ -151,9 +243,16 @@ You'll see the Smart Budget Buddy app with:
 
 **🔍 Verify Test Data is Working:**
 If you don't see any expenses or budgets in the app, check:
-1. Backend is running: `curl http://localhost:8000/health`
-2. Test data loaded: `curl http://localhost:8000/api/expenses | jq '.expenses | length'` (should return 20)
-3. Frontend can connect: Check browser developer console for errors
+1. **Backend is running**: `curl http://localhost:8000/health`
+2. **Test data loaded**: `curl http://localhost:8000/api/expenses | jq '.expenses | length'` (should return 20)
+3. **Frontend can connect**: Check browser developer console for errors
+4. **CORS is working**: Updated CORS settings allow all origins for development
+
+**🔧 Recent Updates (Fixed Issues):**
+- ✅ **Fixed CORS Issues**: Simplified CORS configuration for development
+- ✅ **Updated Pydantic Syntax**: Uses `model_dump()` instead of deprecated `.dict()`
+- ✅ **Removed OpenAI Dependency**: Works with sample responses (no API key needed)
+- ✅ **Improved npm Scripts**: Clearer command names in `package.json`
 
 **🚀 Quick Verification Script:**
 Run this script to verify everything is working:
@@ -164,17 +263,29 @@ This will check backend health, test data loading, and frontend accessibility.
 
 ### Alternative Commands
 
-If you prefer manual commands:
+If you prefer manual commands or the npm scripts don't work:
 
 ```bash
+# Setup: Install Python dependencies
+python -m pip install -r requirements.txt
+
 # Backend (Terminal 1)
 python -m uvicorn main:app --reload --host localhost --port 8000
 
-# Frontend (Terminal 2)
-cd app && python -m http.server 3000
+# Frontend (Terminal 2) 
+cd app && python -m http.server 3000 --bind localhost
 
-# Frontend alternative port
-cd app && python -m http.server 8080
+# Frontend alternative port if 3000 is busy
+cd app && python -m http.server 8080 --bind localhost
+```
+
+**📝 Available npm Scripts:**
+```bash
+npm run setup                # Install Python dependencies
+npm run run-backend-server   # Start FastAPI backend on port 8000  
+npm run run-website         # Start frontend on port 3000
+npm run build               # Build assets (development only)
+npm run test                # Run tests (placeholder)
 ```
 
 **Note**: Make sure both servers are running simultaneously for the app to work properly.
@@ -380,7 +491,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👥 Authors
 
-- **Your Name** - *Initial work* - [YourGitHub](https://github.com/yourusername)
+- **Rob Thomas** - *Initial work* - [YourGitHub](https://github.com/yourusername)
 
 ## 🙏 Acknowledgments
 
@@ -424,7 +535,7 @@ Before starting this tutorial, make sure you have:
 
 ### 🚀 Step-by-Step Tutorial
 
-#### Step 1: Environment Setup (15 minutes)
+#### Step 2: Environment Setup (15 minutes)
 
 1. **Clone the project**:
    ```bash
@@ -432,29 +543,34 @@ Before starting this tutorial, make sure you have:
    cd smart-budget-buddy
    ```
 
-2. **Set up Python environment**:
+2. **Set up Python environment** (Python 3.10+ required):
    ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   pip install -r requirements.txt
+   # Check Python version first
+   python --version  # Should be 3.10+
+   
+   # Install dependencies
+   npm run setup
+   # OR manually:
+   python -m pip install -r requirements.txt
    ```
 
-3. **Set up environment variables**:
+3. **Optional - Set up environment variables**:
    ```bash
-   cp .env.example .env
-   # Edit .env file and add your OpenAI API key
+   # Create .env file only if you want OpenAI integration
+   echo "OPENAI_API_KEY=your_key_here" > .env
+   # App works with sample responses without this
    ```
 
-#### Step 2: Explore the Backend (30 minutes)
+#### Step 3: Explore the Backend (30 minutes)
 
 1. **Understand the FastAPI structure**:
    - Open `main.py` and examine the API endpoints
-   - Study the Pydantic models for data validation
-   - Learn about CORS middleware setup
+   - Study the Pydantic models for data validation (now using modern v2 syntax)
+   - Learn about simplified CORS middleware setup (`allow_origins=["*"]` for development)
 
 2. **Test the API**:
    ```bash
-   npm run backend
+   npm run run-backend-server
    ```
    - Visit `http://localhost:8000/docs` for interactive API documentation
    - **Important**: Test data is automatically loaded when the server starts!
@@ -463,11 +579,12 @@ Before starting this tutorial, make sure you have:
 
 3. **Key concepts to understand**:
    - RESTful API design
-   - Request/response handling
-   - Data validation with Pydantic
-   - Error handling
+   - Request/response handling with Pydantic v2
+   - Modern `model_dump()` method instead of deprecated `.dict()`
+   - Simplified CORS configuration for development
+   - In-memory data storage with automatic test data loading
 
-#### Step 3: app Development (45 minutes)
+#### Step 4: app Development (45 minutes)
 
 1. **HTML Structure** (`app/index.html`):
    - Study the semantic HTML structure
@@ -480,43 +597,69 @@ Before starting this tutorial, make sure you have:
    - Learn about CSS variables and animations
 
 3. **JavaScript Functionality** (`app/js/`):
-   - `api.js`: API communication layer
+   - `api.js`: API communication layer (connects to `http://localhost:8000`)
    - `charts.js`: Data visualization with Chart.js
    - `app.js`: Main application logic and DOM manipulation
 
-#### Step 4: AI Integration (30 minutes)
+**🔧 Testing Frontend Connection:**
+```bash
+# Start frontend in separate terminal
+npm run run-website
+# Visit http://localhost:3000
+```
 
-1. **OpenAI API Setup**:
-   - Obtain an OpenAI API key from [OpenAI Platform](https://platform.openai.com/)
-   - Add the key to your `.env` file
+#### Step 5: AI Integration (30 minutes)
+
+1. **AI Integration Notes**:
+   - **No API Key Required**: The app includes sample AI responses for demo purposes
+   - **Optional OpenAI Setup**: Add `OPENAI_API_KEY` to `.env` for real responses
+   - **Sample Data**: Includes pre-written questions and contextual responses
 
 2. **Study the AI endpoint**:
    - Examine the `/api/ai/insights` endpoint in `main.py`
    - Learn how to structure prompts for financial advice
-   - Understand error handling for AI API calls
+   - Understand the fallback to sample responses when no API key is provided
 
 3. **Test AI features**:
-   - Add some sample expenses
+   - Use the pre-loaded sample expenses (20 items)
    - Ask questions like "How can I reduce my spending?"
-   - Observe the AI-generated responses
+   - Observe the AI-generated responses (sample or real depending on setup)
 
-#### Step 5: Testing and Debugging (20 minutes)
+**🤖 Sample Questions Available:**
+- "How can I reduce my spending on food?"
+- "What's my biggest expense category?"
+- "Give me tips to save money on transportation"
+
+#### Step 6: Testing and Debugging (20 minutes)
 
 1. **Test the complete application**:
    ```bash
-   # Terminal 1: Start backend
-   uvicorn main:app --reload
+   # Terminal 1: Start backend (with auto-loaded test data)
+   npm run run-backend-server
    
    # Terminal 2: Start app
-   cd app
-   python -m http.server 3000
+   npm run run-website
    ```
 
 2. **Test all features**:
-   - Add expenses and budgets
-   - View dashboard charts
-   - Ask AI for financial insights
-   - Test responsive design on mobile
+   - **Verify Test Data**: Should see 20 expenses and 7 budgets automatically loaded
+   - **Add New Data**: Add expenses and budgets through the UI
+   - **View Dashboard**: Check that charts display correctly
+   - **AI Insights**: Ask sample questions and verify responses
+   - **Responsive Design**: Test on mobile and desktop viewports
+   - **API Connectivity**: Check browser console for any CORS or API errors
+
+3. **Common Verification Steps**:
+   ```bash
+   # Check backend health
+   curl http://localhost:8000/health
+   
+   # Verify test data loaded
+   curl http://localhost:8000/api/expenses | jq '.expenses | length'
+   
+   # Test frontend accessibility
+   curl -I http://localhost:3000
+   ```
 
 ### 📊 Test Data
 
@@ -559,51 +702,68 @@ The project includes comprehensive test data to help students understand how the
 
 ### Common Issues and Solutions
 
+## 🔧 Troubleshooting
+
+### Common Issues and Solutions
+
 #### Backend Won't Start
 
-**Problem**: `npm run backend` fails or shows errors
+**Problem**: `npm run run-backend-server` fails or shows errors
 
 **Solutions**:
-1. **Check Python Dependencies**:
+1. **Check Python Version**:
    ```bash
-   pip install -r requirements.txt
+   python --version  # Should be 3.10 or higher
+   py --version      # On Windows, try this if python fails
    ```
 
-2. **Check Port Availability**:
+2. **Install Dependencies**:
    ```bash
-   # Kill any process using port 8000
-   lsof -ti:8000 | xargs kill -9
+   npm run setup
+   # OR manually:
+   python -m pip install -r requirements.txt
    ```
 
-3. **Manual Start**:
+3. **Check for Import Errors**:
+   ```bash
+   python -c "import fastapi, uvicorn, pydantic; print('Dependencies OK')"
+   ```
+
+4. **Manual Start**:
    ```bash
    python -m uvicorn main:app --reload --host localhost --port 8000
    ```
 
+5. **Windows Specific**:
+   ```bash
+   py -m uvicorn main:app --reload --host localhost --port 8000
+   ```
+
 #### Frontend Won't Start
 
-**Problem**: `npm run dev` fails or shows errors
+**Problem**: `npm run run-website` fails or shows errors
 
 **Solutions**:
 1. **Check Port Availability**:
    ```bash
    # Kill any process using port 3000
-   lsof -ti:3000 | xargs kill -9
+   lsof -ti:3000 | xargs kill -9  # Linux/Mac
+   netstat -ano | findstr :3000   # Windows
    ```
 
 2. **Try Alternative Port**:
    ```bash
-   npm run dev:8080
+   cd app && python -m http.server 8080 --bind localhost
    ```
 
 3. **Manual Start**:
    ```bash
-   cd app && python -m http.server 3000
+   cd app && python -m http.server 3000 --bind localhost
    ```
 
-#### API Connection Issues
+#### API Connection Issues (CORS Errors)
 
-**Problem**: Frontend can't connect to backend
+**Problem**: Frontend can't connect to backend (Fixed in recent updates)
 
 **Solutions**:
 1. **Verify Backend is Running**:
@@ -616,7 +776,8 @@ The project includes comprehensive test data to help students understand how the
    const API_BASE_URL = 'http://localhost:8000';
    ```
 
-3. **CORS Issues**: Make sure both servers are running on the expected ports
+3. **CORS Configuration**: The backend now uses `allow_origins=["*"]` for development
+4. **Restart Both Servers**: Stop both servers and restart them in order
 
 #### Test Data Not Loading
 
@@ -634,20 +795,35 @@ The project includes comprehensive test data to help students understand how the
    curl -X POST http://localhost:8000/api/reset-data
    ```
 
-3. **Restart Backend**:
-   ```bash
-   # Stop backend (Ctrl+C) and restart
-   npm run backend
-   ```
+3. **Restart Backend**: The latest version auto-loads test data on startup
 
-#### AI Insights Not Working
+#### Python Command Issues (Windows)
 
-**Problem**: AI responses are not generating
+**Problem**: `python` command not found on Windows
 
 **Solutions**:
-1. **Check OpenAI API Key** in `.env` file
-2. **For Development**: The app uses sample AI responses, so this should work without an API key
-3. **Check Network**: Ensure no firewall is blocking connections
+1. **Use Python Launcher**:
+   ```bash
+   py -m pip install -r requirements.txt
+   py -m uvicorn main:app --reload --host localhost --port 8000
+   ```
+
+2. **Add Python to PATH**: During Python installation, check "Add Python to PATH"
+
+3. **Use Full Path**: Find Python installation and use full path
+
+#### Pydantic Version Issues
+
+**Problem**: Errors about `.dict()` method or Pydantic compatibility
+
+**Solutions**:
+1. **Check Python Version**: Must be Python 3.10+
+2. **Update Dependencies**:
+   ```bash
+   pip install --upgrade pydantic fastapi
+   ```
+
+3. **The codebase has been updated to use `model_dump()` instead of deprecated `.dict()`
 
 ### Quick Debug Commands
 
@@ -655,17 +831,27 @@ The project includes comprehensive test data to help students understand how the
 # Quick verification of entire setup
 python verify_setup.py
 
+# Check Python version (must be 3.10+)
+python --version
+py --version  # On Windows
+
 # Check if backend is running
 curl http://localhost:8000/health
 
-# Check if frontend is accessible
+# Check if frontend is accessible  
 curl http://localhost:3000
 
-# Verify test data is loaded
+# Verify test data is loaded (should return 20)
 curl http://localhost:8000/api/expenses | jq '.expenses | length'
 
 # Check sample questions
 curl http://localhost:8000/api/sample-questions
+
+# Test package dependencies
+python -c "import fastapi, uvicorn, pydantic; print('Dependencies OK')"
+
+# Reset test data
+curl -X POST http://localhost:8000/api/reset-data
 ```
 
 ### Getting Help
@@ -678,10 +864,6 @@ If you encounter issues not covered here:
 4. **Reset Everything**: Stop both servers, restart them, and refresh your browser
 
 ---
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 🤝 Contributing
 
