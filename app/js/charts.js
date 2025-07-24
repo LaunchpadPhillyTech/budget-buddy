@@ -176,7 +176,9 @@ class ChartManager {
      * chartManager.createBudgetChart('budget-chart', budgets, expenses);
      */
     createBudgetChart(canvasId, budgets, expenses) {
+
         const ctx = document.getElementById(canvasId);
+        
         if (!ctx) return null;
 
         // Destroy existing chart to prevent memory leaks
@@ -186,6 +188,7 @@ class ChartManager {
 
         // Calculate spent amounts by category
         const spentByCategory = {};
+        
         expenses.forEach(expense => {
             const category = expense.category;
             spentByCategory[category] = (spentByCategory[category] || 0) + expense.amount;
@@ -279,7 +282,9 @@ class ChartManager {
      * });
      */
     createTrendChart(canvasId, monthlyData) {
+
         const ctx = document.getElementById(canvasId);
+        
         if (!ctx) return null;
 
         // Destroy existing chart to prevent memory leaks
@@ -370,6 +375,7 @@ class ChartManager {
      */
     updateChart(canvasId, newData) {
         const chart = this.charts[canvasId];
+        
         if (!chart) return;
 
         // Update doughnut chart data
@@ -390,6 +396,7 @@ class ChartManager {
      * chartManager.destroyChart('spending-chart');
      */
     destroyChart(canvasId) {
+        
         if (this.charts[canvasId]) {
             this.charts[canvasId].destroy();
             delete this.charts[canvasId];

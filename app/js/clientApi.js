@@ -77,6 +77,7 @@ class BudgetAPI {
         };
 
         try {
+
             const response = await fetch(url, config);
 
             if (!response.ok) {
@@ -192,7 +193,7 @@ class BudgetAPI {
      * console.log(insights.recommendations); // Array of recommendations
      */
     async getAIInsights(expenses, question) {
-        return this.request('/api/ai/insights', {
+        return this.request('/api/ai/insight', {
             method: 'POST',
             body: JSON.stringify({
                 expenses: expenses,
@@ -214,7 +215,7 @@ class BudgetAPI {
      * console.log(report.category_breakdown); // Spending by category
      */
     async getMonthlyReport() {
-        return this.request('/api/reports/monthly');
+        return this.request('/api/report/monthly');
     }
 
     // =============================================================================

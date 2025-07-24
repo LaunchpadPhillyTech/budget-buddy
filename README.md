@@ -57,6 +57,8 @@ cd smart-budget-buddy
 
 ```bash
 # Install Python dependencies
+source venv/bin/activate
+pip install -r requirements.txt
 npm run setup
 # OR manually:
 python -m pip install -r requirements.txt

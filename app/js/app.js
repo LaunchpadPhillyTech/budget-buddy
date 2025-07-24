@@ -173,17 +173,16 @@ class BudgetBuddyApp {
      * Refreshes summary cards and spending chart
      */
     async updateDashboard() {
+        // Bugs: added 
+
         try {
             // Get monthly report data from backend
-            const report = await api.getMonthlyReport();
+            const report = await api.getMonthlyReport;
 
             // Update dashboard summary cards
-            document.getElementById('total-spent').textContent =
-                `$${report.total_spent.toFixed(2)}`;
-            document.getElementById('expense-count').textContent =
-                report.expense_count;
-            document.getElementById('budget-count').textContent =
-                this.budgets.length;
+            document.getElementById('total-spent').textContent = `$${report.total_spent}`;
+            document.getElementById('expense-count').textContent = report.expense_count;
+            document.getElementById('budget-count').textContent = this.budgets;
 
             // Update spending chart
             if (report.category_breakdown && Object.keys(report.category_breakdown).length > 0) {

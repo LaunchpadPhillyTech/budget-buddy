@@ -102,7 +102,9 @@ async def create_budget(budget: BudgetCreate):
 # AI endpoints
 @app.post("/api/ai/insights")
 async def get_ai_insights(request: AIInsightRequest):
+
     """Get AI-powered financial insights"""
+    
     try:
         # For demonstration purposes, we'll use sample insights
         # In production, you would call the OpenAI API here
