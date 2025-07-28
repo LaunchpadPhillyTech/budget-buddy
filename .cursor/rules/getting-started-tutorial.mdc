@@ -1,0 +1,133 @@
+# Getting Started Tutorial: Simple ChatGPT Integration
+
+## Prerequisites
+- Python 3.10+ installed
+- OpenAI API key from https://platform.openai.com/api-keys
+- Git Bash or Command Prompt
+- Text editor (VS Code recommended)
+
+## Step 1: Environment Setup
+
+### 1.1 Create Virtual Environment
+```bash
+# Create a Python virtual environment
+python -m venv venv
+
+# Activate the virtual environment
+# On Windows (Git Bash):
+source venv/Scripts/activate
+# On macOS/Linux:
+source venv/bin/activate
+```
+
+### 1.2 Install Dependencies
+```bash
+# Install required Python packages
+pip install fastapi uvicorn openai python-dotenv
+
+# Or use the project script
+pnpm setup
+```
+
+### 1.3 Configure Environment Variables
+1. Copy [.evn.example](mdc:.evn.example) to `.env`
+2. Add your OpenAI API key:
+```
+OPENAI_API_KEY=sk-your-actual-api-key-here
+```
+
+## Step 2: Understanding the Frontend
+
+### 2.1 HTML Structure ([index.html](mdc:index.html))
+The main interface consists of:
+- **Header**: Title with robot emoji
+- **Input Section**: Textarea for user questions
+- **Example Questions**: Pre-built buttons for testing
+- **Response Section**: Area to display AI responses
+
+### 2.2 CSS Styling ([css/styles.css](mdc:css/styles.css))
+Key styling features:
+- **Gradient Background**: Purple-blue gradient
+- **Modern Design**: Rounded corners, shadows, animations
+- **Responsive Layout**: Works on desktop and mobile
+- **Interactive States**: Hover effects, loading states, error styling
+
+### 2.3 JavaScript Functionality ([js/api.js](mdc:js/api.js))
+Core functions:
+- `fillExample()` - Populates input with example questions
+- `sendToChatGPT()` - Makes API call to backend
+- `displayResponse()` - Shows AI response in UI
+- **Error Handling**: Graceful error display
+- **Loading States**: Visual feedback during API calls
+
+## Step 3: Understanding the Backend
+
+### 3.1 FastAPI Server ([backend/main.py](mdc:backend/main.py))
+Key components:
+- **CORS Configuration**: Allows frontend to communicate
+- **Data Models**: Pydantic models for request/response validation
+- **API Endpoints**: 
+  - `GET /` - Health check
+  - `POST /api/chat` - ChatGPT integration
+- **Error Handling**: Comprehensive error management
+- **Logging**: Detailed request/response logging
+
+### 3.2 Server Configuration ([main.py](mdc:main.py))
+Entry point for uvicorn server with:
+- Auto-reload for development
+- Proper host/port configuration
+- Startup messages and warnings
+
+## Step 4: Running the Application
+
+### 4.1 Start the Backend
+```bash
+# Start FastAPI server
+pnpm run-backend
+# Server runs on http://localhost:8000
+```
+
+### 4.2 Start the Frontend
+```bash
+# In a new terminal, start the frontend
+pnpm run-website
+# Website runs on http://localhost:3000
+```
+
+### 4.3 Test the Application
+1. Open http://localhost:3000 in your browser
+2. Try the example questions or type your own
+3. Check the backend logs for API calls
+4. Verify CORS is working properly
+
+## Step 5: Development Workflow
+
+### 5.1 Making Changes
+- **Frontend**: Edit HTML/CSS/JS files, refresh browser
+- **Backend**: Save Python files, server auto-reloads
+- **Environment**: Restart server after changing .env
+
+### 5.2 Debugging
+- **Browser Console**: Check for JavaScript errors
+- **Backend Logs**: Monitor FastAPI server output
+- **Network Tab**: Inspect API calls and responses
+- **CORS Issues**: Verify allow_origins configuration
+
+### 5.3 Common Issues
+- **CORS Errors**: Check backend CORS configuration
+- **API Key Issues**: Verify .env file and key validity
+- **Port Conflicts**: Ensure ports 3000 and 8000 are available
+- **Virtual Environment**: Make sure it's activated
+
+## Step 6: Next Steps
+- Add more API endpoints
+- Implement user authentication
+- Add database integration
+- Create more complex UI features
+- Deploy to production
+
+This tutorial provides a complete foundation for understanding and extending the Simple ChatGPT Integration project.
+description:
+globs:
+alwaysApply: false
+---

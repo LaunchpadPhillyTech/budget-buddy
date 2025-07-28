@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple ChatGPT App</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <h1>🤖 Simple ChatGPT App</h1>
+
+        <!-- Input Section -->
+        <div class="input-section">
+            <label for="user-input">Ask ChatGPT anything:</label>
+            <textarea 
+                id="user-input" 
+                placeholder="Type your question here... For example: 'Explain quantum physics in simple terms' or 'Write a short poem about coding'"
+            ></textarea>
+            
+            <!-- Example Questions -->
+            <div class="example-questions">
+                <h3>💡 Try these examples:</h3>
+                <button class="example-btn" onclick="fillExample('Explain artificial intelligence in simple terms')">
+                    What is AI?
+                </button>
+                <button class="example-btn" onclick="fillExample('Write a short poem about programming')">
+                    Write a poem
+                </button>
+                <button class="example-btn" onclick="fillExample('Give me 3 tips for learning JavaScript')">
+                    JavaScript tips
+                </button>
+                <button class="example-btn" onclick="fillExample('What are the benefits of exercise?')">
+                    Exercise benefits
+                </button>
+            </div>
+
+            <button id="send-btn" onclick="sendToChatGPT()">
+                Send to ChatGPT
+            </button>
+        </div>
+
+        <!-- Response Section -->
+        <div class="response-section">
+            <label>ChatGPT Response:</label>
+            <div id="ai-response">
+                <div class="placeholder">
+                    Your AI response will appear here after you send a message...
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script src="js/api.js"></script>
+
+</html>
+
+

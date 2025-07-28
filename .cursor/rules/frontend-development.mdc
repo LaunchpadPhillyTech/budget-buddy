@@ -1,0 +1,157 @@
+# Frontend Development Guidelines
+
+## HTML Structure ([index.html](mdc:index.html))
+
+### Best Practices
+- **Semantic HTML**: Use proper tags for structure
+- **Accessibility**: Include proper labels and ARIA attributes
+- **Responsive Design**: Use viewport meta tag
+- **Clean Structure**: Organize sections logically
+
+### Key Components
+```html
+<!-- Header with clear title -->
+<h1>🤖 Simple ChatGPT App</h1>
+
+<!-- Input section with proper labeling -->
+<div class="input-section">
+    <label for="user-input">Ask ChatGPT anything:</label>
+    <textarea id="user-input" placeholder="Type your question here..."></textarea>
+</div>
+
+<!-- Example questions for better UX -->
+<div class="example-questions">
+    <button class="example-btn" onclick="fillExample('text')">Example</button>
+</div>
+
+<!-- Response section with proper structure -->
+<div class="response-section">
+    <label>ChatGPT Response:</label>
+    <div id="ai-response"></div>
+</div>
+```
+
+## CSS Styling ([css/styles.css](mdc:css/styles.css))
+
+### Design Principles
+- **Modern Aesthetics**: Gradients, shadows, rounded corners
+- **Responsive Layout**: Flexbox and media queries
+- **Interactive States**: Hover, focus, disabled states
+- **Consistent Spacing**: Use consistent padding/margins
+
+### Key Styling Patterns
+```css
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Gradient backgrounds */
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Modern card design */
+.container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+/* Interactive button states */
+#send-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+```
+
+### Color Scheme
+- **Primary**: #667eea (Blue)
+- **Secondary**: #764ba2 (Purple)
+- **Text**: #333 (Dark gray)
+- **Background**: #f8f9fa (Light gray)
+- **Error**: #721c24 (Red)
+
+## JavaScript Functionality ([js/api.js](mdc:js/api.js))
+
+### API Integration Pattern
+```javascript
+async function sendToChatGPT() {
+    // 1. Get user input
+    const userInput = document.getElementById('user-input').value.trim();
+    
+    // 2. Validate input
+    if (!userInput) {
+        alert('Please enter a question first!');
+        return;
+    }
+    
+    // 3. Update UI for loading state
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending to ChatGPT...';
+    
+    try {
+        // 4. Make API call
+        const response = await fetch('http://localhost:8000/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message: userInput })
+        });
+        
+        // 5. Handle response
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+        
+        // 6. Display result
+        displayResponse(data.response);
+        
+    } catch (error) {
+        // 7. Handle errors gracefully
+        console.error('❌ Error:', error);
+        displayError(error.message);
+    } finally {
+        // 8. Reset UI state
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send to ChatGPT';
+    }
+}
+```
+
+### Error Handling Best Practices
+- **User-Friendly Messages**: Clear, actionable error text
+- **Console Logging**: Detailed error information for debugging
+- **Graceful Degradation**: UI remains functional even with errors
+- **Loading States**: Visual feedback during async operations
+
+### UI State Management
+- **Loading States**: Disable buttons, show spinners
+- **Error States**: Display error messages with styling
+- **Success States**: Show results with proper formatting
+- **Reset States**: Return to initial state after operations
+
+## Development Workflow
+
+### Making Changes
+1. **HTML**: Edit structure, refresh browser
+2. **CSS**: Modify styles, see immediate changes
+3. **JavaScript**: Update logic, test functionality
+
+### Testing
+- **Manual Testing**: Use example buttons
+- **Console Debugging**: Check browser console for errors
+- **Network Inspection**: Monitor API calls in DevTools
+- **Responsive Testing**: Test on different screen sizes
+
+### Common Patterns
+- **Event Listeners**: Use `addEventListener` for interactions
+- **Async/Await**: Handle API calls properly
+- **DOM Manipulation**: Update UI elements dynamically
+- **Error Boundaries**: Catch and display errors gracefully
+
+This guide ensures consistent, maintainable frontend development practices.
+description:
+globs:
+alwaysApply: false
+---
